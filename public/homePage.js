@@ -1,12 +1,13 @@
 "use strict";
 
-// ---------- 1. Выход из личного кабинета: ----------
+// ---------- 1. Выход из личного кабинета (log out): ----------
 const logoutButton = new LogoutButton();
 
 logoutButton.action = () => {
   ApiConnector.logout(response => {
-    // { success: true } <- удачный ответ
-    // { success: false, error: "Пользователь не авторизован"} <- неудачный ответ
+    // Варианты response:
+    // { success: true }
+    // { success: false, error: "Пользователь не авторизован"}
     if (response.success) {
       location.reload();
     }
@@ -122,7 +123,7 @@ ApiConnector.getFavorites(response => {
 favoritesWidget.addUserCallback = user => {
   // { id: "4", name: "secret"} <- user
   ApiConnector.addUserToFavorites(user, response => {
-    // Полученный response:
+    // Варианты response:
     // { success: true,
     //   data: {
     //     "2": "Ваня дурачок",
@@ -130,7 +131,7 @@ favoritesWidget.addUserCallback = user => {
     //     "4": "secret"
     //   }
     // }
-    // {success: false, error: "Такой пользователь уже есть в списке"} <- юзер уже добавлен
+    // {success: false, error: "Такой пользователь уже есть в списке"}
     if (response.success) {
       favoritesWidget.clearTable();
       favoritesWidget.fillTable(response.data);
